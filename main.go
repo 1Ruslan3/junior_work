@@ -4,6 +4,7 @@ import (
 	"junior/internal/config"
 	"junior/internal/handler"
 	"junior/internal/logger"
+	"junior/internal/model"
 	"junior/internal/repository"
 	"junior/internal/service"
 	"log"
@@ -18,8 +19,11 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	logger.Init()
-	db := repository.InitDB(cfg)
-	db.AutoMigrate(&repository.Subscription{})
+
+	db := repository.InitDB(*cfg)
+	if err := db.AutoMigrate(&model.Subscription{}); err != nil {
+		log.Fatalf("failed to run migrations: %v", err)
+	}
 
 	repo := repository.NewSubscriptionRepository(db)
 	svc := service.NewSubscriptionService(repo)

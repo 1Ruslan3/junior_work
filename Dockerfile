@@ -1,14 +1,11 @@
-FROM golang:1.24.2 
+FROM golang:1.24.2 AS builder
 
 WORKDIR /app
-
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
-
 COPY . .
+RUN go mod download
+RUN go build -o junior ./main.go
 
-RUN go install github.com/swaggo/swag/cmd/swag@latest && swag init
-RUN go build -o main .
-
-CMD ["./main"]
+FROM gcr.io/distroless/base-debian11
+WORKDIR /app
+COPY --from=builder /app/junior .
+CMD ["./junior"]
