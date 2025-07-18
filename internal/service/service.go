@@ -1,8 +1,8 @@
 package service
 
 import (
-	"subscription-service/internal/model"
-	"subscription-service/internal/repository"
+	"junior/internal/model"
+	"junior/internal/repository"
 	"time"
 )
 
