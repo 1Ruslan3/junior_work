@@ -2,8 +2,8 @@ package repository
 
 import (
 	"fmt"
-	"subscription-service/internal/config"
-	"subscription-service/internal/model"
+	"junior/internal/config"
+	"junior/internal/model"
 	"time"
 
 	"gorm.io/driver/postgres"
